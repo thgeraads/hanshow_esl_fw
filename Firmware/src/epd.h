@@ -1,9 +1,9 @@
 #pragma once
 
-//#define epd_height 128 // fix for displaying image on 213_bwr
-//#define epd_width 250 // fix for displaying image on 213_bwr
-#define epd_height 200
-#define epd_width 200
+#define epd_height 128 // fix for displaying image on 213_bwr
+#define epd_width 250 // fix for displaying image on 213_bwr
+//#define epd_height 200
+//#define epd_width 200
 #define epd_buffer_size ((epd_height/8) * epd_width)
 
 void set_EPD_model(uint8_t model_nr);
