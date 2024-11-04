@@ -13,6 +13,8 @@
 #include "epd.h"
 #include "time.h"
 #include "bart_tif.h"
+#include "OneBitDisplay.h"
+
 
 RAM uint8_t battery_level;
 RAM uint16_t battery_mv;
@@ -24,16 +26,14 @@ RAM uint8_t minute_refresh = 100;
 // Settings
 extern settings_struct settings;
 
-_attribute_ram_code_ void user_init_normal(void)
-{                            // this will get executed one time after power up
+_attribute_ram_code_ void user_init_normal(void) {                            // this will get executed one time after power up
     random_generator_init(); // must
     init_time();
     init_ble();
     init_flash();
     init_nfc();
 
-    // epd_display_tiff((uint8_t *)bart_tif, sizeof(bart_tif));
-    // epd_display(3334533);
+    display_bitmap("%boot%", 0);
 }
 
 _attribute_ram_code_ void user_init_deepRetn(void)

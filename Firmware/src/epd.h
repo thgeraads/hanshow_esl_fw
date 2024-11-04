@@ -8,6 +8,7 @@
 
 void set_EPD_model(uint8_t model_nr);
 void init_epd(void);
+void display_bitmap(char* bitmap, uint8_t full_or_partial);
 int8_t EPD_read_temp(void);
 void EPD_Display(unsigned char *image, int size, uint8_t full_or_partial);
 void epd_display_tiff(uint8_t *pData, int iSize);
@@ -16,3 +17,5 @@ void epd_set_sleep(void);
 uint8_t epd_state_handler(void);
 void epd_display_char(uint8_t data);
 void epd_clear(void);
+void renderTextOverlay(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
+
