@@ -33,7 +33,7 @@ _attribute_ram_code_ void user_init_normal(void) {                            //
     init_flash();
     init_nfc();
 
-    display_bitmap("", 1);
+    display_bitmap("%boot%", 1);
 }
 
 _attribute_ram_code_ void user_init_deepRetn(void)
