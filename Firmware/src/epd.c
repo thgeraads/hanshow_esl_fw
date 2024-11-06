@@ -56,7 +56,7 @@ _attribute_ram_code_ void EPD_detect_model(void)
     // Here we neeed to detect it
     if (EPD_BWR_213_detect())
     {
-        epd_model = 2;
+        epd_model = 3;
     }
     else if (EPD_BWR_154_detect())// Right now this will never trigger, the 154 is same to 213BWR right now.
     {
@@ -64,11 +64,11 @@ _attribute_ram_code_ void EPD_detect_model(void)
     }
     else if (EPD_BW_213_ice_detect())
     {
-        epd_model = 4;
+        epd_model = 3;
     }
     else
     {
-        epd_model = 1;
+        epd_model = 3;
     }
 
     EPD_POWER_OFF();
@@ -198,26 +198,26 @@ _attribute_ram_code_ void TIFFDraw(TIFFDRAW *pDraw)
     int x, y;
 
     s = pDraw->pPixels;
-    y = pDraw->y;                          // current line
-    d = &epd_buffer[(249 * 16) + (y / 8)]; // rotated 90 deg clockwise
-    ucDstMask = 0x80 >> (y & 7);           // destination mask
-    ucSrcMask = 0;                         // src mask
+    y = pDraw->y;
+    d = &epd_buffer[(200 * (y / 8))]; // Adjusted to start at correct line
+    ucDstMask = 0x80 >> (y & 7); // destination mask
+
     for (x = 0; x < pDraw->iWidth; x++)
     {
-        // Slower to draw this way, but it allows us to use a single buffer
-        // instead of drawing and then converting the pixels to be the EPD format
         if (ucSrcMask == 0)
-        { // load next source byte
+        {
             ucSrcMask = 0x80;
             uc = *s++;
         }
         if (!(uc & ucSrcMask))
-        { // black pixel
-            d[-(x * 16)] &= ~ucDstMask;
+        {
+            // Instead of d[-(x * 16)], adjust for positive index
+            d[x / 8] &= ~ucDstMask;
         }
         ucSrcMask >>= 1;
     }
 }
+
 
 _attribute_ram_code_ void epd_display_tiff(uint8_t *pData, int iSize)
 {
